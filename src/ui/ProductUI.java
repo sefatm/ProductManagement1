@@ -236,7 +236,7 @@ public class ProductUI extends javax.swing.JFrame {
         p.setQty(Integer.valueOf(qty.getText()));
         p.setPrice(Double.valueOf(price.getText()));
         
-        int status =0;
+        int status = 0;
 
         try {
            status = s.save(p);
@@ -323,8 +323,8 @@ public class ProductUI extends javax.swing.JFrame {
     
     private void loadTable() {
         try {
-        Service ps = new Service();
-        List<Product> list = ps.getAll();
+        Service s = new Service();
+        List<Product> list = s.getAll();
         
         model.setRowCount(0);
 
