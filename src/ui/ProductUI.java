@@ -23,7 +23,6 @@ public class ProductUI extends javax.swing.JFrame {
     /**
      * Creates new form Product
      */
-    DefaultTableModel model;
     
     public ProductUI() {
         initComponents();
@@ -319,6 +318,8 @@ public class ProductUI extends javax.swing.JFrame {
             qty.setText("");
             price.setText("");
         }
+    
+    DefaultTableModel model;
     
     private void loadTable() {
         try {
