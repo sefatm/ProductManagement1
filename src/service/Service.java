@@ -70,20 +70,11 @@ public class Service {
         return p;
     }
 
-    public List<Product> getAll() throws SQLException{
+    public ResultSet getResultSet() throws SQLException {
         con = DBConnection.getConnection();
-        String sql = "select * from products1";
+        String sql = "Select * from products1";
         PreparedStatement ps = con.prepareStatement(sql);
-        List products1 = new ArrayList();
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            Product p = new Product();
-            p.setCode(rs.getInt("pcode1"));
-            p.setName(rs.getString("pname1"));
-            p.setQty(rs.getInt("qty1"));
-            p.setPrice(rs.getDouble("price1"));
-            products1.add(p);
-        }
-        return products1;
+        return rs;
     }
 }

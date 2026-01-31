@@ -5,6 +5,8 @@
  */
 package ui;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import model.Product;
 import java.sql.SQLException;
 import java.util.List;
@@ -114,23 +116,15 @@ public class ProductUI extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Code", "Name", "Quantity", "Price"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -308,8 +302,26 @@ public class ProductUI extends javax.swing.JFrame {
 
     private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
         // TODO add your handling code here:
-        model = (DefaultTableModel) table.getModel();
-        loadTable();
+        Service s = new Service();
+        try {
+            ResultSet rs = s.getResultSet();
+            ResultSetMetaData rsmeta = rs.getMetaData();
+            
+            DefaultTableModel model = new DefaultTableModel();
+            for(int i = 1; i <= rsmeta.getColumnCount(); i++){
+                model.addColumn(rsmeta.getColumnName(i));
+            }
+            table.setModel(model);
+            while(rs.next()){
+                Object[] row = new Object[rsmeta.getColumnCount()];
+                for(int i = 0; i < row.length; i++){
+                    row[i] = rs.getObject(i+1);
+                }
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, e);
+        }
     }//GEN-LAST:event_btnShowActionPerformed
     
     private void cleartext(){
@@ -318,29 +330,7 @@ public class ProductUI extends javax.swing.JFrame {
             qty.setText("");
             price.setText("");
         }
-    
-    DefaultTableModel model;
-    
-    private void loadTable() {
-        try {
-        Service s = new Service();
-        List<Product> list = s.getAll();
-        
-        model.setRowCount(0);
-
-        for(Product p : list){
-            model.addRow(new Object[]{
-                p.getCode(),
-                p.getName(),
-                p.getQty(),
-                p.getPrice()
-            });
-        }
-        } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-    /**
+     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
