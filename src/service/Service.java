@@ -42,6 +42,7 @@ public class Service {
         ps.setInt(2, p.getQty());
         ps.setDouble(3, p.getPrice());
         ps.setInt(4, p.getCode());
+        
         int status = ps.executeUpdate();
         return status;
     }
@@ -51,6 +52,7 @@ public class Service {
         String sql = "delete from products1 where pcode1 = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, code);
+        
         int status = ps.executeUpdate();
         return status;
     }
