@@ -291,7 +291,7 @@ public class ProductUI extends javax.swing.JFrame {
         Service s = new Service();
         int status = 0;
         try {
-            int sts = JOptionPane.showConfirmDialog(rootPane, "Do yo want to delete ?");
+            int sts = JOptionPane.showConfirmDialog(rootPane, "Do you want to delete ?");
             if(sts == 0){
                 status = s.delete(code);
                 cleartext();
